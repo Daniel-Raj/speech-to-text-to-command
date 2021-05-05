@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#main {
+  background-image: linear-gradient(to right, skyblue, lightgreen);
+  height:100vh;
+}
+
+form {  
+  border-radius:50px;
+  width:350px;
+  height:300px;
+  background-color: transparent;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: height 1s ease;
+}
+
+.user-name, .pass-word, .but-ton {
+  margin-top: 20px;
+}
+
+label {
+  margin: 20px;
+  font-size: large;
+}
+
+input[type=text], input[type=password] {
+  width: 90%;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  height: 40px;
+  font-size: 15px;
+  padding-left: 20px;
+  background-color: transparent;
+}
+
+input[type=text] {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin:5px 20px 0; 
+  border-bottom: 1px solid black;
+}
+
+input[type=password] {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  margin:0 20px 5px; 
+}
+
+input::placeholder {
+  color: black;
+}
+
+input:hover, input:focus, button:hover  {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+h1, .but-ton {
+  text-align: center;
+}
+
+input[type=button] {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 40%;
+  font-size: large;
+  border-radius: 40px;
+  outline: none;
+}
+
+#lis-button, #back-button {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+#close-button {
+  margin-left: 20px;
+}
+
+#back-button {
+  margin-left: 20px;  
+}
