@@ -78,6 +78,15 @@ input[type=button] {
   outline: none;
 }
 
+table {
+  text-align: left;
+  padding: 20px;
+}
+
+td, th {
+  padding-left: 20px;
+}
+
 #lis-button, #back-button {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }

@@ -6,15 +6,43 @@ function connect() {
     if (n == '' || p == '') 
         alert("Fields left Empty!!!");
     else {
-        transform();
+        eel.start();
     }
 }
 
+eel.expose(transform);
 function transform() {
-    f.style.height = "80px";
+    f.style.height = "250px";
     f.innerHTML = `
 
     <div class="but-ton">
+        <div> 
+        Use the following PHRASES for the values while speaking.<br />
+        <table>
+            <thead>
+                <th>Phrases</th>
+                <th>values</th>
+            </head>
+            <tbody>
+                <tr>
+                    <td>Asterisk</td>
+                    <td>*</td>
+                </tr>
+                <tr>
+                    <td>Open Bracket</td>
+                    <td>(</td>
+                </tr>
+                <tr>
+                    <td>Close Bracket</td>
+                    <td>)</td>
+                </tr>
+                <tr>
+                    <td>Character</td>
+                    <td>Varchar2</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
         <input type="button" id="lis-button" value="Listen" onclick="listen()">
         <input type="button" id="close-button" value="Close" onclick="closeit()">
     </div>
@@ -23,6 +51,7 @@ function transform() {
 }
 
 function listen() {
+    f.style.height = "80px";
     f.innerHTML = `
 
     <h1>Listening...<input type='button' id="back-button" value="Stop" onclick="transform()"></h1>
