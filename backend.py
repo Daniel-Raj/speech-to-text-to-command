@@ -5,7 +5,7 @@ def speech_translation():
         with sr.Microphone() as source:
             r.adjust_for_ambient_noise(source, duration = 0.5)
             print("Speak now")
-            audio_data = r.listen(source, phrase_time_limit = 20)
+            audio_data = r.listen(source, phrase_time_limit = 30)
 
         data = r.recognize_google(audio_data, language = 'en-IN', show_all = False)
         print(data)
@@ -21,14 +21,14 @@ def error_correction():
     data = speech_translation()
 
     oracle_std_dict = {
-        'asterisk'  : '*', 'character' : 'varchar2', 'semicolon' : ';',
-        'percentage': '%', 'comma'     : ',', 'greater than' : '>',
+        'asterisk'  : '*', 'character' : 'varchar2(25)', 'semicolon' : ';',
+        'percentage': '%', ' comma'     : ',', 'greater than' : '>',
         'less than' : '<', 'equals'    : '=', 'greater than or equal to' : '>=',
         'less than or equal to' : '<=', 'not equal' : '<>', 'open bracket' : '(',
-        'close brackets' : ')', 'single quote' : "'", 'double quotes' : '"',
+        'close bracket' : ')', 'single quote' : "'", 'double quotes' : '"',
         'single quote' : "'", 'double quote' : '"', 'single coat' : "'",
-        'double coat' : '"',
-        }
+        'double coat' : '"', ' underscore ' : '_'
+    }
     command = data
     for k, v in oracle_std_dict.items():
         command = command.replace(k, v)
@@ -55,5 +55,5 @@ if __name__ == '__main__':
             Asterisk      - *
             Character     - varchar2
             equals        - =''')
-    #error_correction()
-    oracle_connection()
+    error_correction()
+    # oracle_connection()

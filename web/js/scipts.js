@@ -1,4 +1,4 @@
-var f = document.querySelector('form');
+var f = document.querySelector("form");
 function connect() {
     n = document.querySelector("#u-name").value;
     p = document.querySelector("#p-word").value;
@@ -6,13 +6,13 @@ function connect() {
     if (n == '' || p == '') 
         alert("Fields left Empty!!!");
     else {
-        eel.start();
+        eel.login(n, p);
     }
 }
 
-eel.expose(transform);
-function transform() {
-    f.style.height = "250px";
+eel.expose(verifiedLogin);
+function verifiedLogin(msg) {
+    f.style.height = "300px";
     f.innerHTML = `
 
     <div class="but-ton">
@@ -38,27 +38,49 @@ function transform() {
                 </tr>
                 <tr>
                     <td>Character</td>
-                    <td>Varchar2</td>
+                    <td>Varchar2()</td>
+                </tr>
+                <tr>
+                    <td>Equals</td>
+                    <td>=</td>
                 </tr>
             </tbody>
         </table>
         </div>
-        <input type="button" id="lis-button" value="Listen" onclick="listen()">
-        <input type="button" id="close-button" value="Close" onclick="closeit()">
+        <input type="button" id="lis-button" value="Listen" onclick="lisFunction()">
+        <input type="button" id="close-button" value="Exit" onclick="closeFunction()">
+        <p><b>${msg}<b></p>
     </div>
 
     `;
 }
 
+eel.expose(listen);
 function listen() {
     f.style.height = "80px";
     f.innerHTML = `
 
-    <h1>Listening...<input type='button' id="back-button" value="Stop" onclick="transform()"></h1>
+    <h1>Listening...<input type='button' id="back-button" value="Stop" onclick="killFunction()"></h1>
 
     `; 
 }
 
+eel.expose(response);
+function response(data) {
+    f.style.height = "350px";
+    f.innerHTML = `
+    <div class="edit">
+    <h1>Edit</h1>
+    <textarea>${data}</textarea><br />
+    <input type="button" id="run-button" value="Run" onclick="runFunction()">    
+    <input type="button" id="lis-button" value="Listen" onclick="lisFunction()">    
+    <br />
+    <input type="button" id="close-button" value="Exit" onclick="closeFunction()">
+    <div>
+    `;
+}
+
+eel.expose(closeit)
 function closeit() {
     f.style.height = "300px";   
     f.innerHTML = `
@@ -73,4 +95,30 @@ function closeit() {
     </div>
     
     `;
+}
+
+eel.expose(error)
+function error() {
+    alert("Login error : Username/Password is wrong");
+}
+
+function lisFunction() {
+    eel.oracle_connection('');
+}
+
+function closeFunction() {
+    eel.logout();
+}
+
+function killFunction() {
+    eel.kill();
+}
+
+function runFunction() {
+    eel.oracle_connection(document.querySelector("textarea").value);
+}
+
+eel.expose(startAlert);
+function startAlert(msg, err) {
+    verifiedLogin('Your last request Failed :' + msg);
 }

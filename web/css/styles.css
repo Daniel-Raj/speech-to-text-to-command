@@ -59,12 +59,19 @@ input::placeholder {
   color: black;
 }
 
-input:hover, input:focus, button:hover  {
+input:hover, input:focus, input[type=button] {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-h1, .but-ton {
+h1, .but-ton, .edit {
   text-align: center;
+}
+
+textarea {
+  width: 80%;
+  height: 100px;
+  margin-bottom: 30px;
+  resize: none;
 }
 
 input[type=button] {
@@ -97,4 +104,9 @@ td, th {
 
 #back-button {
   margin-left: 20px;  
+
+}
+#run-button {
+  margin-right: 20px;  
+  margin-bottom: 20px;  
 }
