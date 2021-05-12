@@ -18,9 +18,11 @@ def speech_translation(tostop):
             print(data)
             return data
         except sr.RequestError as re:
-            return ("API Call Fails :", re)
+            return ("API Call Fails", re)
         except sr.UnknownValueError as uve:
-            return ("Can't Recognize :", uve)
+            return ("Can't Recognize", uve)
+        except KeyboardInterrupt:
+            return ("Keyboard Interrupt",)
         except Exception as e:
             return (e,)
 
@@ -31,10 +33,10 @@ def error_correction():
     print('Error correction started!')
     oracle_std_dict = {
         'asterisk'  : '*', 'character' : 'varchar2(25)', 'semicolon' : ';',
-        'percentage': '%', ' comma'     : ',', 'greater than' : '>',
+        'percentage': '%', ' comma'     : ',', 'kama' : ',', 'greater than' : '>',
         'less than' : '<', 'equals'    : '=', 'greater than or equal to' : '>=',
-        'less than or equal to' : '<=', 'not equal' : '<>', 'open bracket' : '(',
-        'close bracket' : ')', 'single quote' : "'", 'double quotes' : '"',
+        'less than or equal to' : '<=', 'not equal' : '<>', 'open bracket ' : '(',
+        ' close bracket' : ')', 'single quote' : "'", 'double quotes' : '"',
         'single quote' : "'", 'double quote' : '"', 'single coat' : "'",
         'double coat' : '"', ' underscore ' : '_'
     }
@@ -52,11 +54,17 @@ def oracle_connection(val):
         if val == '':
             val = error_correction()
         if type(val) == tuple:
-            eel.startAlert(val[0], val[1])
+            eel.startAlert(val[0])
         else:
             val = val.strip()
             print('Excecuting our command!')
-            process = subprocess.Popen(f'sqlplus -S {username}/{password}', shell=True, stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=None)
+            if val.index('select') == 0:
+                val = 'set lines 250 pagesize 250;\n' + val
+            if username == 'sys':
+                connect_command = f'sqlplus -S {username}/{password} as sysdba'
+            else:
+                connect_command = f'sqlplus -S {username}/{password}'
+            process = subprocess.Popen(connect_command, shell=True, stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=None)
             process.stdin.write(val.encode('utf-8')) #passing command
             stdOutput,stdError = process.communicate()
             print(stdOutput.decode('utf-8'))
@@ -64,9 +72,6 @@ def oracle_connection(val):
             eel.response(val)
 
 
-@eel.expose
-def kill():
-    eel.verifiedLogin('')
     
 @eel.expose
 def login(u, p):
@@ -74,9 +79,12 @@ def login(u, p):
     username = u
     password = p
     try:
-        conn = cxo.connect(f'{username}/{password}@localhost')
+        if username == 'sys':
+            conn = cxo.connect(username, password, 'localhost', cxo.SYSDBA)
+        else:
+            conn = cxo.connect(f'{username}/{password}@localhost')
         conn.close()
-        eel.verifiedLogin(f'Welcome {username}')
+        eel.verifiedLogin(f'Welcome {username.capitalize()}')
     except cxo.DatabaseError:
         eel.error()    
 

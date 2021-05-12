@@ -60,7 +60,7 @@ function listen() {
     f.style.height = "80px";
     f.innerHTML = `
 
-    <h1>Listening...<input type='button' id="back-button" value="Stop" onclick="killFunction()"></h1>
+    <h1>Listening...</h1>
 
     `; 
 }
@@ -110,15 +110,11 @@ function closeFunction() {
     eel.logout();
 }
 
-function killFunction() {
-    eel.kill();
-}
-
 function runFunction() {
     eel.oracle_connection(document.querySelector("textarea").value);
 }
 
 eel.expose(startAlert);
-function startAlert(msg, err) {
-    verifiedLogin('Your last request Failed :' + msg);
+function startAlert(errmsg) {
+    verifiedLogin('last request : ' + errmsg);
 }
