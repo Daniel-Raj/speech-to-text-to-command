@@ -53,30 +53,53 @@ function verifiedLogin(msg) {
                     <td>desc</td>
                 </tr>
             </tbody>
-        </table>
+        </table>                  
+                    
         </div>
         <input type="button" id="lis-button" value="Listen" onclick="lisFunction()">
         <input type="button" id="close-button" value="Exit" onclick="closeFunction()">
         <p><b>${msg}<b></p>
     </div>
-
+    
     `;
+
+    if (document.querySelector(".extra-info").classList.contains("none-dis"))
+        document.querySelector(".extra-info").classList.remove("none-dis");
 }
 
 eel.expose(listen);
 function listen() {
+    if (!f.classList.contains("f-box-shadow")) 
+        f.classList.add("f-box-shadow");
     f.style.height = "80px";
     f.innerHTML = `
 
-    <h1>Listening...</h1>
+    <h1 class="lis-msg">Listening...</h1>
+
+    `; 
+
+    if (document.querySelector(".extra-info").classList.contains("none-dis"))
+        document.querySelector(".extra-info").classList.remove("none-dis");
+}
+
+eel.expose(process);
+function process() {
+    document.querySelector(".extra-info").classList.toggle("none-dis");
+    f.classList.remove("f-box-shadow");
+    f.innerHTML = `
+
+    <h1 class="pro-msg">Processing</h1>
 
     `; 
 }
 
 eel.expose(response);
 function response(data) {
+    if (!f.classList.contains("f-box-shadow")) 
+        f.classList.add("f-box-shadow");
     f.style.height = "350px";
     f.innerHTML = `
+
     <div class="edit">
     <h1>Edit</h1>
     <textarea>${data}</textarea><br />
@@ -85,6 +108,7 @@ function response(data) {
     <br />
     <input type="button" id="close-button" value="Exit" onclick="closeFunction()">
     <div>
+    
     `;
 }
 

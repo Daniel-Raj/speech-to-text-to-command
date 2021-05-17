@@ -1,21 +1,22 @@
-import eel, speech_recognition as sr, subprocess, cx_Oracle as cxo
+import eel, speech_recognition as sr, subprocess, cx_Oracle as cxo, functools as ft
 
 eel.init('web')
 username, password = '', ''
 
 @eel.expose
 def speech_translation(tostop):
-    print('Listener is Ready!')
+    # print('Listener is Ready!')
     if tostop != True:
         r = sr.Recognizer()
         try:
             with sr.Microphone() as source:
                 r.adjust_for_ambient_noise(source, duration = 0.5)
                 eel.listen()
-                audio_data = r.listen(source, phrase_time_limit = 15)
+                audio_data = r.listen(source, phrase_time_limit = 20)
 
             data = r.recognize_google(audio_data, language = 'en-IN', show_all = False)
-            # print(data)
+            eel.process()
+            print(data)
             return data
         except sr.RequestError as re:
             return ("API Call Fails", re)
@@ -32,27 +33,81 @@ def error_correction():
         return data
     # print('Error correction started!')
     oracle_std_dict = {
-        'asterisk'  : '*', 'character' : 'varchar2(25)', 'semicolon' : ';',
-        'percentage': '%', ' comma'     : ',', 'kama' : ',', 'Kama' : ',', 'greater than' : '>',
-        'less than' : '<', 'equals'    : '=', 'greater than or equal to' : '>=',
+        'asterisk' : '*', 'character' : 'varchar2(25)', 'semicolon' : ';',
+        'percentage': '%', (' comma', ' kama', ' Kama') : ',', 'greater than' : '>',
+        'less than' : '<', 'equals' : '=', 'greater than or equal to' : '>=',
         'less than or equal to' : '<=', 'not equal to' : '<>', 'open bracket ' : '(',
-        ' close bracket' : ')', 'single quote' : "'", 'double quotes' : '"',
-        'single quote' : "'", 'double quote' : '"', 'single coat' : "'",
-        'double coat' : '"', ' underscore ' : '_'
+        ' close bracket' : ')', ('single quote', 'single quote', 'single coat' ) : "'",
+        ('double coat', 'double quote', 'double quotes') : '"', ' underscore ' : '_', 
+        'some (' : 'sum(', 'has' : 'as'
     }
     command = data
     for k, v in oracle_std_dict.items():
-        command = command.replace(k, v)
+        if type(k) == tuple:
+            for lv in k:
+                command = command.replace(lv, v)
+        else:
+            command = command.replace(k, v)
+
     if command[len(command) - 1] != ';':
         command += ';'
     
+    #Case conversion
+    temp_command = list(command.split())
+    uc = temp_command.count('uppercase')    
+    lc = temp_command.count('lowercase')    
+    
+    while uc != 0:
+        i = temp_command.index('uppercase')
+        temp_command[i + 2] = temp_command[i + 2].upper()
+        temp_command.pop(i)
+        uc -= 1
+    while lc != 0:
+        i = temp_command.index('lowercase')
+        temp_command[i + 2] = temp_command[i + 2].upper()
+        temp_command.pop(i)
+        lc -= 1
+
+    command = ft.reduce(lambda a, b: a + ' ' + b, temp_command)
+    del temp_command
+    #
+
+    finds_quote = False
+
+    for i in command:
+        if i == '"' or i == "'":
+            finds_quote = True
+            break
+    else:
+        print(command)
+        return command
+
+    if finds_quote == True:
+        command = strip_inside_quotes(command)
 
     print(command)
     return command
 
+def strip_inside_quotes(cmd):
+    final_command = ''
+    s = False
+    for i, v in enumerate(cmd):
+            if v == "'" or v == '"':
+                final_command += v
+                if s == False:
+                    s = True
+                else:
+                    s = False
+            elif s == True and v.isspace() == True:
+                continue
+            else:
+                final_command += v
+    return final_command
+
+
 @eel.expose
 def oracle_connection(val):
-        print('Started Succesfully!')
+        # print('Started Succesfully!')
         if val == '':
             val = error_correction()
         if type(val) == tuple:
@@ -97,5 +152,4 @@ def logout():
     eel.closeit()
 
 eel.start('index.html')
-
 

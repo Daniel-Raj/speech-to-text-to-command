@@ -1,11 +1,14 @@
 body {
   margin: 0;
-  font-family: Arial;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #main {
   background-image: linear-gradient(to right, skyblue, lightgreen);
   height:100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
 }
 
 form {  
@@ -18,16 +21,28 @@ form {
   top: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
+  transition: all 1s ease;
+}
+
+.extra-info {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}
+
+.none-dis {
+  display: none;
+}
+
+.f-box-shadow{
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  transition: height 1s ease;
 }
 
 .user-name, .pass-word, .but-ton {
   margin-top: 20px;
 }
 
-h1 {
-  
+h1 {  
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
@@ -44,7 +59,8 @@ input[type=text], input[type=password] {
   height: 40px;
   font-size: 15px;
   padding-left: 20px;
-  background-color: transparent;
+  background-color: transparent;  
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 input[type=text] {
@@ -96,9 +112,14 @@ input[type=button] {
   outline: none;
 }
 
-table {
+table{
   text-align: left;
   padding: 20px;
+}
+
+.note {
+  text-align: center;
+  font-size: small;
 }
 
 td, th {

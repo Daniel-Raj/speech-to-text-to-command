@@ -12,7 +12,7 @@
     <body>
         <div id="main">
 
-            <form>
+            <form class="f-box-shadow">
                 <h1> Database <br /> User Login</h1>
                 <div class="user-name" >
                     <input id="u-name" type="text" name="username" placeholder="Enter User name here">
@@ -22,7 +22,26 @@
                     <input type="button" value="Connect" onclick="connect()">
                 </div>
             </form>
-        </div>
+            <div class="extra-info none-dis">        
+                <table class="note">
+                    <tbody>
+                        <tr>
+                            <th>select asterisk from t_name where c_name equals <b>[uppercase/lowercase]</b> 'Adams'</th>
+                        </tr>
+                        <tr>
+                            <td> FOR </td>
+                        </tr>
+                        <tr>
+                            <td>SELECT * FROM t_name WHERE c_name = 'ADAMS';</td>
+                        </tr>
+                        <tr>
+                            <td>Sentence Case (Eg. 'Adams') is the default if none is selected</td>
+                        </tr>
+                    </tbody>   
+                </table>
+            </div>
+
+        </div>        
         <script type="text/javascript" src="/eel.js"></script>
         <script src="js/scipts.js"></script>
     </body>
