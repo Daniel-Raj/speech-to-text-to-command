@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial;
 }
 
 #main {
@@ -24,6 +24,11 @@ form {
 
 .user-name, .pass-word, .but-ton {
   margin-top: 20px;
+}
+
+h1 {
+  
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 label {
@@ -56,10 +61,10 @@ input[type=password] {
 }
 
 input::placeholder {
-  color: black;
+  color: rgba(0, 0, 0, 0.5);
 }
 
-input:hover, input:focus, input[type=button] {
+input:hover, input:focus, input[type=button], textarea {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
@@ -72,6 +77,12 @@ textarea {
   height: 100px;
   margin-bottom: 30px;
   resize: none;
+  border: none;
+  background-color: #000000;
+  color: white;
+  border-radius:20px;
+  outline: none;
+  padding: 10px;
 }
 
 input[type=button] {
@@ -91,7 +102,7 @@ table {
 }
 
 td, th {
-  padding-left: 20px;
+  padding-left: 40px;
 }
 
 #lis-button, #back-button {

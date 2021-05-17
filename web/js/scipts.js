@@ -12,12 +12,12 @@ function connect() {
 
 eel.expose(verifiedLogin);
 function verifiedLogin(msg) {
-    f.style.height = "300px";
+    f.style.height = "350px";
     f.innerHTML = `
 
     <div class="but-ton">
         <div> 
-        Use the following PHRASES for the values while speaking.<br />
+        Use the following PHRASES while speaking.<br />
         <table>
             <thead>
                 <th>Phrases</th>
@@ -43,6 +43,14 @@ function verifiedLogin(msg) {
                 <tr>
                     <td>Equals</td>
                     <td>=</td>
+                </tr>
+                <tr>
+                    <td>Not Equal to</td>
+                    <td><></td>
+                </tr>
+                <tr>
+                    <td>Describe</td>
+                    <td>desc</td>
                 </tr>
             </tbody>
         </table>

@@ -15,7 +15,7 @@ def speech_translation(tostop):
                 audio_data = r.listen(source, phrase_time_limit = 15)
 
             data = r.recognize_google(audio_data, language = 'en-IN', show_all = False)
-            print(data)
+            # print(data)
             return data
         except sr.RequestError as re:
             return ("API Call Fails", re)
@@ -30,12 +30,12 @@ def error_correction():
     data = speech_translation(False)
     if type(data) == tuple:
         return data
-    print('Error correction started!')
+    # print('Error correction started!')
     oracle_std_dict = {
         'asterisk'  : '*', 'character' : 'varchar2(25)', 'semicolon' : ';',
-        'percentage': '%', ' comma'     : ',', 'kama' : ',', 'greater than' : '>',
+        'percentage': '%', ' comma'     : ',', 'kama' : ',', 'Kama' : ',', 'greater than' : '>',
         'less than' : '<', 'equals'    : '=', 'greater than or equal to' : '>=',
-        'less than or equal to' : '<=', 'not equal' : '<>', 'open bracket ' : '(',
+        'less than or equal to' : '<=', 'not equal to' : '<>', 'open bracket ' : '(',
         ' close bracket' : ')', 'single quote' : "'", 'double quotes' : '"',
         'single quote' : "'", 'double quote' : '"', 'single coat' : "'",
         'double coat' : '"', ' underscore ' : '_'
@@ -45,6 +45,8 @@ def error_correction():
         command = command.replace(k, v)
     if command[len(command) - 1] != ';':
         command += ';'
+    
+
     print(command)
     return command
 
@@ -57,8 +59,8 @@ def oracle_connection(val):
             eel.startAlert(val[0])
         else:
             val = val.strip()
-            print('Excecuting our command!')
-            if val.index('select') == 0:
+            # print('Excecuting our command!')
+            if val[:6] == 'select':
                 val = 'set lines 250 pagesize 250;\n' + val
             if username == 'sys':
                 connect_command = f'sqlplus -S {username}/{password} as sysdba'
