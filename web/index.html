@@ -29,13 +29,10 @@
                             <th>select asterisk from t_name where c_name equals <b>[uppercase/lowercase]</b> 'Adams'</th>
                         </tr>
                         <tr>
-                            <td> FOR </td>
+                            <td>( SELECT * FROM t_name WHERE c_name = 'ADAMS'; )</td>
                         </tr>
                         <tr>
-                            <td>SELECT * FROM t_name WHERE c_name = 'ADAMS';</td>
-                        </tr>
-                        <tr>
-                            <td>Sentence Case (Eg. 'Adams') is the default if none is selected</td>
+                            <td>Sentence Case is the default if none is selected</td>
                         </tr>
                     </tbody>   
                 </table>

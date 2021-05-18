@@ -35,7 +35,7 @@ def error_correction():
     oracle_std_dict = {
         'asterisk' : '*', 'character' : 'varchar2(25)', 'semicolon' : ';',
         'percentage': '%', (' comma', ' kama', ' Kama') : ',', 'greater than' : '>',
-        'less than' : '<', 'equals' : '=', 'greater than or equal to' : '>=',
+        'less than' : '<', ('equals', 'equal') : '=', 'greater than or equal to' : '>=',
         'less than or equal to' : '<=', 'not equal to' : '<>', 'open bracket ' : '(',
         ' close bracket' : ')', ('single quote', 'single quote', 'single coat' ) : "'",
         ('double coat', 'double quote', 'double quotes') : '"', ' underscore ' : '_', 
@@ -56,17 +56,19 @@ def error_correction():
     temp_command = list(command.split())
     uc = temp_command.count('uppercase')    
     lc = temp_command.count('lowercase')    
-    
-    while uc != 0:
-        i = temp_command.index('uppercase')
-        temp_command[i + 2] = temp_command[i + 2].upper()
-        temp_command.pop(i)
-        uc -= 1
-    while lc != 0:
-        i = temp_command.index('lowercase')
-        temp_command[i + 2] = temp_command[i + 2].upper()
-        temp_command.pop(i)
-        lc -= 1
+    try:
+        while uc != 0:
+            i = temp_command.index('uppercase')
+            temp_command[i + 2] = temp_command[i + 2].upper()
+            temp_command.pop(i)
+            uc -= 1
+        while lc != 0:
+            i = temp_command.index('lowercase')
+            temp_command[i + 2] = temp_command[i + 2].upper()
+            temp_command.pop(i)
+            lc -= 1
+    except Exception:
+        pass
 
     command = ft.reduce(lambda a, b: a + ' ' + b, temp_command)
     del temp_command
