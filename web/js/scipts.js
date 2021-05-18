@@ -127,6 +127,8 @@ function closeit() {
     </div>
     
     `;
+    if (!document.querySelector(".extra-info").classList.contains("none-dis"))
+        document.querySelector(".extra-info").classList.add("none-dis");
 }
 
 eel.expose(error)
