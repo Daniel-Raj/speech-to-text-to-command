@@ -13,7 +13,7 @@ def speech_translation():
         with sr.Microphone() as source:
             r.adjust_for_ambient_noise(source, duration = 0.2)
             eel.ack()
-            audio_data = r.listen(source, phrase_time_limit=20)
+            audio_data = r.listen(source, phrase_time_limit = 20)
 
         data = r.recognize_google(audio_data, language = 'en-IN', show_all = False)
         eel.process()
