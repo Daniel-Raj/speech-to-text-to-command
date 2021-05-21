@@ -4,14 +4,14 @@ function connect() {
     p = document.querySelector("#p-word").value;
     
     if (n == '' || p == '') 
-        alert("Fields left Empty!!!");
+        alert("Failed : Username/Password is not given!!!");
     else {
         eel.login(n, p);
     }
 }
 
 eel.expose(verifiedLogin);
-function verifiedLogin(msg) {
+function verifiedLogin(msg = "See below for an example") {
     f.style.height = "350px";
     f.innerHTML = `
 
@@ -21,7 +21,7 @@ function verifiedLogin(msg) {
         <table>
             <thead>
                 <th>Phrases</th>
-                <th>values</th>
+                <th>Values</th>
             </head>
             <tbody>
                 <tr>
@@ -38,7 +38,7 @@ function verifiedLogin(msg) {
                 </tr>
                 <tr>
                     <td>Character</td>
-                    <td>Varchar2()</td>
+                    <td>Varchar2(25)</td>
                 </tr>
                 <tr>
                     <td>Equals</td>
@@ -51,6 +51,10 @@ function verifiedLogin(msg) {
                 <tr>
                     <td>Describe</td>
                     <td>desc</td>
+                </tr>
+                <tr>
+                    <td>Comma/And</td>
+                    <td>,</td>
                 </tr>
             </tbody>
         </table>                  
@@ -67,19 +71,19 @@ function verifiedLogin(msg) {
         document.querySelector(".extra-info").classList.remove("none-dis");
 }
 
-eel.expose(listen);
-function listen() {
+eel.expose(ack);
+function ack(msg = "Listening") {
     if (!f.classList.contains("f-box-shadow")) 
         f.classList.add("f-box-shadow");
     f.style.height = "80px";
     f.innerHTML = `
 
-    <h1 class="lis-msg">Listening...</h1>
+    <h1 class="lis-msg">${msg}...</h1>
 
     `; 
-
-    if (document.querySelector(".extra-info").classList.contains("none-dis"))
-        document.querySelector(".extra-info").classList.remove("none-dis");
+    if (msg == "Listening")
+        if (document.querySelector(".extra-info").classList.contains("none-dis"))
+            document.querySelector(".extra-info").classList.remove("none-dis");
 }
 
 eel.expose(process);
@@ -97,16 +101,18 @@ eel.expose(response);
 function response(data) {
     if (!f.classList.contains("f-box-shadow")) 
         f.classList.add("f-box-shadow");
-    f.style.height = "350px";
+    f.style.height = "300px";
     f.innerHTML = `
 
-    <div class="edit">
-    <h1>Edit</h1>
-    <textarea>${data}</textarea><br />
-    <input type="button" id="run-button" value="Run" onclick="runFunction()">    
-    <input type="button" id="lis-button" value="Listen" onclick="lisFunction()">    
-    <br />
-    <input type="button" id="close-button" value="Exit" onclick="closeFunction()">
+    <div class="edit">   
+        <div class="menu">
+            <input type="button" id="pre-button" value="<<" onclick=verifiedLogin() />
+            <h1 class="span"> Edit </h1>
+            <input type="button" id="lo-button" value="Log out" onclick="closeFunction()">
+        </div>
+        <textarea>${data}</textarea><br />
+        <input type="button" id="run-button" value="Run" onclick="runFunction()">    
+        <input type="button" id="lis-button" value="Listen" onclick="lisFunction()">
     <div>
     
     `;
@@ -133,7 +139,7 @@ function closeit() {
 
 eel.expose(error)
 function error() {
-    alert("Login error : Username/Password is wrong");
+    alert("Login Failed : Username/Password is wrong");
 }
 
 function lisFunction() {

@@ -134,11 +134,32 @@ td, th {
   margin-left: 20px;
 }
 
-#back-button {
+#pre-button, .span, #back-button {
   margin-left: 20px;  
 
 }
 #run-button {
   margin-right: 20px;  
   margin-bottom: 20px;  
+}
+
+#pre-button {
+  width: 45px;
+  border-radius: 50%;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.span {
+  display: inline;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#lo-button {
+  margin-left: 45px;
 }
